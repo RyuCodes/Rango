@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+  <title>{{ category_name }}</title>
+</head>
+
+<body>
+  <h1>{{ category_name }}</h1>
+
+  {% if category %}
+    {% if pages %}
+      <ul>
+        {% for page in pages %}
+          <li><a href="{{ page.url }}">{{ page.title }}</a> -- View{{ category.views|pluralize }}: {{ category.views }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No pages currently in category</p>
+    {% endif %}
+  {% else %}
+    <strong>The specified category {{ category_name }} does not exist!  Stitch ate them all</strong><br>
+    <img src="{% static 'rango/images/Stitch_OfficialDisney.jpg' %}" alt="Picutre of Stitch"/>
+  {% endif %}
+
+<p><a href="{% url 'rango:about' %}">About</a></p>
+</body>
+</html>

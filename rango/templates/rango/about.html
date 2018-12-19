@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head> <title>Oobie's About Page</title>
+</head>
+<body>
+<h1>About Oobie</h2>
+<p>Oobie is actually Spider Man!
+<img src="{% static 'rango/images/spider_man.jpeg' %}" alt="Picutre of Spider Man"/>
+<a href="{% url 'rango:index' %}">Index</a><br />
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+  <title>Index of Webpages</title>
+</head>
+
+<body>
+  <h1>Categories</h1>
+
+  {% if categories %}
+    <ul>
+      {% for category in categories %}
+        <li><a href="{% url 'rango:category' category.url %}">{{ category.name }}</a> -- View{{ category.views|pluralize }}: {{ category.views }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <strong>There are no categories present.  Stitch ate them all</strong>
+    <img src="{% static 'rango/images/Stitch_OfficialDisney.jpg' %}" alt="Picutre of Stitch"/>
+  {% endif %}
+
+  {% if pages %}
+    <h2>Most Viewed Pages:</h2>
+    <ul>
+        {% for page in pages %}
+          <li><a href="{{ page.url }}">{{ page.title }}</a> -- View{{ page.views|pluralize }}: {{ page.views }}</li>
+        {% endfor %}
+  {% else %}
+    <p>There are no pages</p>
+  {% endif %}
+
+<br>
+<a href="{% url 'rango:about' %}">About</a><br />
+</body>
+</html>
