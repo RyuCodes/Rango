@@ -11,7 +11,7 @@
     {% if pages %}
       <ul>
         {% for page in pages %}
-          <li><a href="{{ page.url }}">{{ page.title }}</a> -- View{{ category.views|pluralize }}: {{ category.views }}</li>
+          <li><a href="{% url 'rango:track_url'%}?page_id={{ page.id }}">{{ page.title }}</a> -- View{{ page.views|pluralize }}: {{ page.views }}</li>
         {% endfor %}
       </ul>
     {% else %}
@@ -22,7 +22,7 @@
     <img src="{% static 'rango/images/Stitch_OfficialDisney.jpg' %}" alt="Picutre of Stitch"/>
   {% endif %}
 
-<p><a class="btn btn-primary btn-sm" href="{% url 'rango:add_page' category_name_url%}" role="button">Create a New Page &raquo;</a></p>
+<p><a class="btn btn-primary btn-sm" href="{% url 'rango:add_page' category_name_url %}" role="button">Create a New Page &raquo;</a></p>
 
 <hr />
 <h3>Search with Rango</h3>

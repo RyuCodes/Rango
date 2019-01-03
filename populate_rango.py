@@ -1,7 +1,7 @@
 import os
 
 def populate():
-    python_cat = add_cat("Python", views=128, likes=64)
+    python_cat = add_cat("Python", views=0, likes=64)
     add_page(cat=python_cat,
         title="Official Python Tutorial",
         url="http://docs.python.org/2/tutorial/")

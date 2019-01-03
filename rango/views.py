@@ -111,6 +111,23 @@ def category(request, category_name_url):
     # can pass through anything back tot he templates in a dict format
     return render(request, 'rango/category.html', context_dict)
 
+def track_url(request):
+
+    # page_id is passed from category.html as ?page_id ={{ page.id }}
+    # where ? allows for an ending so that can input key, value pairs
+    if 'page_id' in request.GET:
+        page_id = request.GET.get('page_id')
+        try:
+            # all objects have both id and pk.  Id is faster
+            page = Page.objects.get(id=page_id)
+            page.views += 1
+            page.save()
+            url = page.url
+        except:
+            pass
+
+    return redirect(url)
+
 @login_required
 def add_category(request):
     if request.method == "POST":
