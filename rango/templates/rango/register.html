@@ -1,0 +1,39 @@
+{% extends 'rango/base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body_block %}
+  <h1>Register with Rango</h1>
+  {% if registered %}
+    <p>Oobie says: <strong>Thank you for registering!</strong><br />
+    <a class="btn btn-secondary" href="{% url 'rango:user_login' %}" role="button">Login</a>
+  {% else %}
+    <p>Oobie says: <strong>Register here!</strong>
+
+    <!--enctype for multipart is used because we may be uploading files-->
+    <form class="form-signin" id="user_form" method="post" action="{% url 'rango:register' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+      <!-- display each form. as_p method wraps each element in a <p> element-->
+      <!--{{ user_form.as_p }}-->
+      <!--{{ profile_form.as_p }}-->
+
+      {% for field in user_form.visible_fields %}
+        {{ field.errors }}
+        {{ field.help_text }}<br />
+        {{ field }}<br />
+      {% endfor %}
+
+      {% for field in profile_form.visible_fields %}
+        {{ field.errors }}
+        {{ field.help_text }}<br />
+        {{ field }}<br />
+      {% endfor %}
+
+      <br />
+
+      <input class="btn btn-primary" type="submit" name="submit" value="Register" />
+    </form>
+
+  {% endif %}
+
+{% endblock %}

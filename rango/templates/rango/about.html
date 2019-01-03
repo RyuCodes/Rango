@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 
 {% load static %}
 
-<html>
-<head> <title>Oobie's About Page</title>
-</head>
-<body>
+{% block title %}Oobie's About Page{% endblock %}
+
+{% block body_block %}
 <h1>About Oobie</h2>
-<p>Oobie is actually Spider Man!
+<p>Oobie is actually Spider Man!</p>
 <img src="{% static 'rango/images/spider_man.jpeg' %}" alt="Picutre of Spider Man"/>
-<a href="{% url 'rango:index' %}">Index</a><br />
-</body>
-</html>
+
+<br />
+<p>{{ user.username}} you've visited Oobie {{visits}} time{{visits|pluralize}} before</p>
+
+{% endblock %}

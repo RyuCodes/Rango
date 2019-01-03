@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+<head>
+
+  <!--Required Bootstrap META tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!--Bootstrap CSS-->
+  <link rel="stylesheet" href="{% static 'rango/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'rango/css/bootstrap.css' %}">
+
+  <!--Custom Css, which will override Bootstrap-->
+  <link rel="stylesheet" href="{% static 'rango/css/custom.css' %}">
+
+  <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+<!--Top Nav Bar-->
+  <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="{% url 'rango:index'%}">Rango</a>
+
+    <!--Buton for toggle; delete navbar-expand to get to work-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsToggle" aria-controls="navbarsToggle" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsToggle">
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'rango:about' %}">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'rango:index' %}">Home</a></li>
+
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'rango:restricted' %}">Restricted</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'rango:add_category' %}">Add Category</a></li>
+        {% endif %}
+
+      </ul>
+
+      <!--align right uses auto margin on left-->
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+          <li class="navbar-text">Welcome {{ user.username }}</li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'rango:profile' %}">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'rango:user_logout' %}">Logout</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'rango:register' %}">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'rango:user_login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+<!--enclosing fluid container-->
+<div class="container-fluid">
+  <!--Keep sidebar on same row as main-->
+  <div class="row">
+    <!--sidebar-->
+
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          {% if cat_list %}
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              Category List
+            </h6>
+            {% include 'rango/category_list.html' with cat_list=cat_list %}
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="container">
+      <div>
+        {% block body_block %}
+        {% endblock %}
+      </div>
+    </main><!-- /.container -->
+  </div>
+</div>
+
+
+
+  <!--Bootstrap script requirements: jquery, popper, then bootstrap-->
+<script src="{% static 'rango/jquery-3.3.1.slim.min.js'%}"></script>
+<script src="{% static 'rango/popper.min.js'%}"></script>
+<script src="{% static 'rango/bootstrap.min.js' %}"></script>
+
+</body>
+</html>

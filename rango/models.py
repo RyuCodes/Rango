@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -24,3 +25,16 @@ class Page (models.Model):
 
     def __str__(self):
         return self.title
+
+class UserProfile (models.Model):
+    #Links UserProfile to User model instance. Required
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    #additional attributes to include
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+
+    #override __str__
+
+    def __str__(self):
+        return self.user.username

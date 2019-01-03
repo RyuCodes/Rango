@@ -1,13 +1,10 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 
 {% load static %}
 
-<html>
-<head>
-  <title>{{ category_name }}</title>
-</head>
+{% block title %}{{ category_name }}{% endblock %}
 
-<body>
+{% block body_block %}
   <h1>{{ category_name }}</h1>
 
   {% if category %}
@@ -25,6 +22,27 @@
     <img src="{% static 'rango/images/Stitch_OfficialDisney.jpg' %}" alt="Picutre of Stitch"/>
   {% endif %}
 
-<p><a href="{% url 'rango:about' %}">About</a></p>
-</body>
-</html>
+<p><a class="btn btn-primary btn-sm" href="{% url 'rango:add_page' category_name_url%}" role="button">Create a New Page &raquo;</a></p>
+
+<hr />
+<h3>Search with Rango</h3>
+<br />
+
+
+<!-- search -->
+<div class="container-fluid">
+  <form class="form-signin col-lg-10" id="user_form" method="post" action="{% url 'rango:category' category_name_url %}">
+    {% csrf_token %}
+    <!-- Display search form elements here -->
+    <input type="text" size="50" name="query" value="{{ category_name }}" id="query" />
+    <input class="btn btn-primary" type="submit" name="submit" value="Search" />
+
+    <br />
+  </form>
+    <!--results_list will pass directly into the include, if include uses-->
+    <!--different variables, then use 'with' -->
+    {% include 'rango/search.html' %}
+
+</div>
+
+{% endblock %}
