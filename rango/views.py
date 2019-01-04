@@ -27,13 +27,43 @@ def encode_url(category_name, encode):
 
     return name
 
-def get_category_list():
-    cat_list = Category.objects.all()
+# if no arguments specified, default values will be used
+# gets full category list and encodes the url name for them
+def get_category_list(max_results=0, starts_with=''):
+    cat_list = []
+    if starts_with:
+        cat_list = Category.objects.filter(name__startswith=starts_with)
+    else:
+        cat_list = Category.objects.all()
+
+    if max_results > 0:
+        if len(cat_list) > max_results:
+            cat_list = cat_list[:max_results]
 
     for cat in cat_list:
         cat.url = encode_url(cat.name, True)
 
     return cat_list
+
+def suggest_category(request):
+    cat_list = []
+    starts_with = ''
+
+    # set max results to 8
+    max_results = 8
+
+    if request.method == 'GET':
+        # 'suggestion' passed through rango-ajax $.get request
+        # routed by way of: rango-ajax get request -> urls -> suggest_category
+        starts_with = request.GET['suggestion']
+
+    # Still unclear what this function does
+    else:
+        starts_with = request.POST['suggestion']
+
+    cat_list = get_category_list(max_results, starts_with)
+
+    return render(request, 'rango/category_list.html', {'cat_list':cat_list})
 
 def index(request):
 
@@ -142,6 +172,24 @@ def add_category(request):
         form = CategoryForm()
 
     return render(request, 'rango/add_category.html', {'form': form, 'cat_list': get_category_list()})
+
+@login_required
+def like_category(request):
+    cat_id = None
+    if request.method == 'GET':
+        # 'category_id' must be passed through GET or POST in category.html or
+        # from ajax request in rango-ajax.js
+        cat_id = request.GET['category_id']
+
+    likes = 0
+    if cat_id:
+        category = Category.objects.get(id=int(cat_id))
+        if category:
+            likes = category.likes + 1
+            category.likes = likes
+            category.save()
+
+    return HttpResponse(likes)
 
 @login_required
 def add_page(request, category_name_url):

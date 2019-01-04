@@ -70,8 +70,22 @@
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
               Category List
             </h6>
-            {% include 'rango/category_list.html' with cat_list=cat_list %}
+              <div id="cats">
+                {% include 'rango/category_list.html' with cat_list=cat_list %}
+              </div>
           {% endif %}
+        </ul>
+
+        <!--Find Category-->
+        <ul class="nav flex-column">
+          <form>
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              Find a Category
+            </h6>
+            <label></label>
+            <li class="nav-item"><input class="form-control mr sm-2" type="text" name="suggestion" value=""
+              id="suggestion" /></li>
+          </form>
         </ul>
       </div>
     </nav>
@@ -88,9 +102,12 @@
 
 
   <!--Bootstrap script requirements: jquery, popper, then bootstrap-->
-<script src="{% static 'rango/jquery-3.3.1.slim.min.js'%}"></script>
-<script src="{% static 'rango/popper.min.js'%}"></script>
-<script src="{% static 'rango/bootstrap.min.js' %}"></script>
+<script src="{% static 'rango/js/jquery-3.3.1.min.js'%}"></script>
+<script src="{% static 'rango/js/popper.min.js'%}"></script>
+<script src="{% static 'rango/js/bootstrap.min.js' %}"></script>
+
+<!--App specific AJAX script-->
+<script src="{% static 'rango/js/rango-ajax.js' %}"></script>
 
 </body>
 </html>
