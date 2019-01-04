@@ -1,0 +1,7 @@
+{% load static %}
+
+  <ul>
+    {% for page in pages %}
+      <li><a href="{% url 'rango:track_url'%}?page_id={{ page.id }}">{{ page.title }}</a> -- View{{ page.views|pluralize }}: {{ page.views }}</li>
+    {% endfor %}
+  </ul>

@@ -6,6 +6,13 @@
     <ol>
       {% for result in result_list %}
         <li>
+          <!--Add button-->
+          {% if user.is_authenticated %}
+            <button data-catid="{{ category.id }}" data-title="{{ result.title }}"
+              data-url="{{ result.link }}" class="rango-addpage btn btn-primary btn-sm" type="button">
+              Add</button>
+          {% endif %}
+
           <strong><a href="{{ result.link }}">{{ result.title }}</a></strong><br />
           <em> {{ result.summary }}</em>
         </li>

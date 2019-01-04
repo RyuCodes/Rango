@@ -20,4 +20,18 @@ $(document).ready(function(){
     });
   });
 
+  // For auto-add; look for defined class "rango-addpage"
+  $(".rango-addpage").click(function(){
+    var cat_id, title, url;
+    var test_val;
+    catid = $(this).attr("data-catid");
+    title = $(this).attr("data-title");
+    url = $(this).attr("data-url");
+
+    $.get("/rango/auto_add_page/", {category_id: catid, title: title, url: url}, function(data){
+        $("#page-display").html(data);
+    });
+
+  });
+
 });

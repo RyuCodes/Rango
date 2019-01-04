@@ -16,13 +16,17 @@
     {% endif %}
   </p>
 
+  <!--Page Display Section-->
   {% if category %}
     {% if pages %}
-      <ul>
-        {% for page in pages %}
-          <li><a href="{% url 'rango:track_url'%}?page_id={{ page.id }}">{{ page.title }}</a> -- View{{ page.views|pluralize }}: {{ page.views }}</li>
-        {% endfor %}
-      </ul>
+
+      <div id="page-display">
+        <!-- Specify pages to be passed in, but will pass it in without
+        being explicit -->
+        Will be overwritten
+        {% include 'rango/page_list.html' with pages=pages %}
+      </div>
+
     {% else %}
       <p>No pages currently in category</p>
     {% endif %}
@@ -34,7 +38,7 @@
 <p><a class="btn btn-primary btn-sm" href="{% url 'rango:add_page' category_name_url %}" role="button">Create a New Page &raquo;</a></p>
 
 <hr />
-<h3>Search with Rango</h3>
+<h3>Search with Oobie</h3>
 <br />
 
 
@@ -48,7 +52,7 @@
 
     <br />
   </form>
-    <!--results_list will pass directly into the include, if include uses-->
+    <!--results_list and category will pass directly into the include, if include uses-->
     <!--different variables, then use 'with' -->
     {% include 'rango/search.html' %}
 

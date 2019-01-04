@@ -11,6 +11,7 @@ urlpatterns = [
     path('category/<category_name_url>/', views.category, name='category'),
     path('goto/', views.track_url, name='track_url'),
     path('category/<category_name_url>/add_page/', views.add_page, name='add_page'),
+    path('auto_add_page/', views.auto_add_page, name='auto_add_page'),
     path('like_category/', views.like_category, name='like_category'),
     path('suggest_category/', views.suggest_category, name='suggest_category'),
     path('register/', views.register, name='register'),

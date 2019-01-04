@@ -2,13 +2,14 @@
 
 {% load static %}
 
-{% block title %}Index of Webpages{% endblock %}
+{% block title %}Oobie's Intro to Programming{% endblock %}
 
 {% block body_block %}
 
   <div class="jumbotron">
     <div class="container">
-      <h1 class="display-3">Welcome to Rango!</h1>
+      <h1 class="display-3">Welcome to Oobieville!</h1>
+      <img src="{% static 'rango/images/oobie.png' %}" alt="Oobie in Epcot"/>
     </div>
   </div>
 
@@ -30,10 +31,7 @@
       <div class="col-md">
         {% if pages %}
           <h2>Most Viewed Pages:</h2>
-          <ul>
-              {% for page in pages %}
-                <li><a href="{{ page.url }}">{{ page.title }}</a> -- View{{ page.views|pluralize }}: {{ page.views }}</li>
-              {% endfor %}
+          {% include 'rango/page_list.html' with pages=pages %}
         {% else %}
           <p>There are no pages</p>
         {% endif %}

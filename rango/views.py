@@ -70,7 +70,7 @@ def index(request):
     category_list = get_category_list()
     context_dict = {'cat_list': category_list}
 
-    #most viewed pages
+    #most viewed pages; only returns top 5
     most_viewed = Page.objects.order_by('-views')[:5]
     context_dict['pages'] = most_viewed
 
@@ -222,6 +222,34 @@ def add_page(request, category_name_url):
 
     return render(request, 'rango/add_page.html', {'category_name_url': category_name_url,
         'category_name': category_name, 'form': form, 'cat_list': get_category_list()})
+
+@login_required
+def auto_add_page(request):
+    cat_id = None
+    title = None
+    url = None
+    context_dict = {}
+
+    if request.method == 'GET':
+        cat_id = request.GET['category_id']
+        title = request.GET['title']
+        url = request.GET['url']
+        print(cat_id, title, url)
+
+        if cat_id:
+            category = Category.objects.get(id=int(cat_id))
+
+            # get_or_create is a shortcut that will call save automatically if
+            # Page.DoesNotExist returns True
+            p = Page.objects.get_or_create(category=category, title=title, url=url)
+
+            pages = Page.objects.filter(category=category).order_by('-views')
+
+            # Passes pages to page_list.html
+            context_dict['pages'] = pages
+
+    # will overwrite the div marked div-display
+    return render(request, 'rango/page_list.html', context_dict)
 
 def register(request):
 
